@@ -5,8 +5,6 @@ import com.bulletin.board.bulletinboard.repository.RubricRepository;
 import com.bulletin.board.bulletinboard.service.CRUDService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class RubricServiceImpl implements CRUDService<Rubric> {
 
@@ -22,8 +20,8 @@ public class RubricServiceImpl implements CRUDService<Rubric> {
     }
 
     @Override
-    public Optional <Rubric> findById(int id) {
-        return repository.findById(id);
+    public Rubric findById(int id) {
+        return repository.findById(id).get();
     }
 
     @Override

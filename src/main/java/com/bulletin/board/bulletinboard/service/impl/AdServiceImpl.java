@@ -3,53 +3,45 @@ package com.bulletin.board.bulletinboard.service.impl;
 import com.bulletin.board.bulletinboard.entity.Ad;
 import com.bulletin.board.bulletinboard.repository.AdRepository;
 import com.bulletin.board.bulletinboard.service.AdService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class AdServiceImpl implements AdService {
 
-    @Autowired
-    AdRepository adRepository;
+    private final AdRepository adRepository;
 
-    @Override
-    public List<Ad> findAllByRubrics(List<Integer> ids) {
-        Ad ad = new Ad();
-        if(ids.equals(ad.getRubric())) {
-            return adRepository.findAll(ids);
-        }
-        else throw new IllegalArgumentException("Wrong rubric");
+    public AdServiceImpl(AdRepository adRepository) {
+        this.adRepository = adRepository;
     }
 
     @Override
-    public List<Ad> findAllByKeyWord(List<Integer> ids) {
-        return adRepository.findAll(ids);
+    public List<Ad> findAllByRubrisIds(List<Integer> ids) {
+            return adRepository.findAllByCategoryIsIn(ids);
+    }
+
+    @Override
+    public List<Ad> findAllByKeyWord(String keyWord) {
+        return adRepository.findAllAdByTitleContaining(keyWord);
 
     }
 
     @Override
-    public Optional<Ad> findAllByAuthorId(int authorId) {
-       return adRepository.findById(authorId);
+    public List<Ad> findAllByAuthorId(int authorId) {
+        return adRepository.findAllAdByAuthorId(authorId);
     }
 
     @Override
     public List<Ad> findAllByDate(LocalDate date) {
-        Ad ad =new Ad();
-        if (ad.getPublicationDate() != date) {
-            throw new DateTimeException("Wrong date");
-        }
-        return adRepository.findAll(date);
+        return adRepository.findAllByPublicationDate(date);
     }
 
-    public List<Ad> findAll(){
-        return adRepository.findAll();//
+    public List<Ad> findAll() {
+        return adRepository.findAll();
     }
 
     @Override
@@ -58,12 +50,17 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public Optional<Ad> findById(int id) {
-        return adRepository.findById(id);
+    public Ad findById(int id) {
+        return adRepository.findById(id).get();
     }
 
     @Override
     public void deleteById(int id) {
         adRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAdsByAuthorId(int id) {
+        adRepository.deleteAllByAuthorId(id);
     }
 }

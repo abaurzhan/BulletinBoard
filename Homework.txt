@@ -1,4 +1,4 @@
-1) SQL scripts for creating tables
-2) Repositories for all entities
-3) Inject Repository in Service
-4) Implementation all methods
+1) AuthorService
+2) Url naming convention
+3) Controllers for all domains
+4) PutMapping

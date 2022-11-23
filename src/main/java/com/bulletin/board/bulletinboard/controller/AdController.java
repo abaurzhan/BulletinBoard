@@ -2,7 +2,6 @@ package com.bulletin.board.bulletinboard.controller;
 
 import com.bulletin.board.bulletinboard.entity.Ad;
 import com.bulletin.board.bulletinboard.service.AdService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @RequestMapping("/api/ad")
 public class AdController {
 
-    @Autowired
-    AdService adService;
+    private final AdService adService;
+
+    public AdController(AdService adService) {
+        this.adService = adService;
+    }
 
     @GetMapping
     public List<Ad> getAd() {
@@ -21,6 +23,11 @@ public class AdController {
 
     @PostMapping
     public void addAd(@RequestBody Ad ad) {
+        adService.save(ad);
+    }
+
+    @PutMapping
+    public void updateAd(@RequestBody Ad ad) {
         adService.save(ad);
     }
 
