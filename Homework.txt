@@ -1,0 +1,4 @@
+1) SQL scripts for creating tables
+2) Repositories for all entities
+3) Inject Repository in Service
+4) Implementation all methods

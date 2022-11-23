@@ -1,0 +1,16 @@
+postgres:
+ image: postgres:12.2-alpine
+ ports:
+   - '5432:5432'
+ environment:
+   - POSTGRES_DB=bulletin_board
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=postgres
+rabbitmq:
+  image: rabbitmq:3.8-management-alpine
+  ports:
+    - 5672:5672
+    - 15672:15672
+  environment:
+    - RABBITMQ_DEFAULT_USER=rabbitmq
+    - RABBITMQ_DEFAULT_PASS=rabbitmq
